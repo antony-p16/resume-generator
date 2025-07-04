@@ -5,7 +5,7 @@ import os
 import tempfile
 
 # Configure Gemini API
-genai.configure(api_key=os.getenv("API_KEY", "YOUR_GEMINI_API_KEY"))
+genai.configure(api_key=os.getenv("API_KEY"))
 
 # Load Gemini model
 model = genai.GenerativeModel("gemini-2.5-pro")
