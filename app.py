@@ -2,10 +2,11 @@ from flask import Flask, render_template, request, send_file
 import google.generativeai as genai
 from fpdf import FPDF
 import tempfile
+import os
 
 app = Flask(__name__)
 
-genai.configure(api_key="YOUR_API_KEY_HERE")
+genai.configure(api_key=os.environ["API_KEY"])
 model = genai.GenerativeModel("gemini-2.5-pro")
 
 @app.route("/")
