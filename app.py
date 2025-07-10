@@ -4,14 +4,18 @@ from fpdf import FPDF
 import os
 import tempfile
 import unicodedata
+import re
 
 # --- Unicode Sanitization for PDF ---
 def sanitize_text(text):
-    """
-    Normalize the input text to remove any special Unicode characters
-    that might cause encoding issues when writing to PDF.
-    """
     return unicodedata.normalize("NFKD", text).encode("latin-1", "ignore").decode("latin-1")
+
+# --- Clean markdown-style clutter from output ---
+def clean_output(text):
+    text = re.sub(r'\*{1,2}', '', text)        # Remove * and **
+    text = re.sub(r'#+', '', text)             # Remove # symbols
+    text = re.sub(r'\n{3,}', '\n\n', text)     # Collapse multiple newlines
+    return text.strip()
 
 # --- Streamlit Page Config & CSS ---
 st.set_page_config(page_title="Resume & Cover Letter Generator", page_icon="📄", layout="centered")
@@ -75,7 +79,7 @@ if st.button("✨ Generate Resume & Cover Letter"):
 
         with st.spinner("Generating your documents with Gemini AI..."):
             response = model.generate_content(prompt)
-            result_text = response.text
+            result_text = clean_output(response.text)
 
         st.success("Generation complete! Preview below:")
 
