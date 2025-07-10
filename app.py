@@ -75,7 +75,9 @@ if st.button("✨ Generate Resume & Cover Letter"):
         Education: {education}
         Experience: {experience}
         Target Job Role: {job_role}
-        Use this data only to make this."""
+        Use this data only to make this.
+        Do NOT include any introductions or explanations like "Here is your resume" or "Based on your input".
+        Just output the final resume and cover letter, clearly separated."""
 
         with st.spinner("Generating your documents with Gemini AI..."):
             response = model.generate_content(prompt)
